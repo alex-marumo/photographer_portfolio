@@ -2,9 +2,9 @@
 export interface ImageProps {
   id: number;
   url: string;
-  width: number;
-  height: number;
-  blurDataUrl: string;
+  blurDataUrl?: string;
+  title?: string;
+  description?: string;
 }
 
 export interface SharedModalProps {

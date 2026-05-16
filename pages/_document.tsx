@@ -5,25 +5,25 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" href="/favicon.svg" />
           <meta
             name="description"
-            content="See pictures from Next.js Conf and the After Party."
+            content="Terry Wildlife Photography - Capturing the raw beauty and truth of the wild of Botswana"
           />
-          <meta property="og:site_name" content="nextjsconf-pics.vercel.app" />
+          <meta property="og:site_name" content="Terry Wildlife Photography" />
           <meta
             property="og:description"
-            content="See pictures from Next.js Conf and the After Party."
+            content="Young wildlife photographer capturing the raw beauty and truth of the wild of Botswana"
           />
-          <meta property="og:title" content="Next.js Conf 2022 Pictures" />
+          <meta property="og:title" content="Terry Wildlife Photography" />
           <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content="Next.js Conf 2022 Pictures" />
+          <meta name="twitter:title" content="Terry Wildlife Photography" />
           <meta
             name="twitter:description"
-            content="See pictures from Next.js Conf and the After Party."
+            content="Young wildlife photographer capturing the raw beauty and truth of the wild of Botswana"
           />
         </Head>
-        <body className="bg-black antialiased">
+        <body className="bg-stone-100 antialiased">
           <Main />
           <NextScript />
         </body>
