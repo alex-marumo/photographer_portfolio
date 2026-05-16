@@ -94,13 +94,14 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
               ? featuredImages.map((image) => (
                   <Link
                     key={image.id}
-                    href={`/gallery#image-${image.id}`} // Add anchor link
+                    href={`/gallery#image-${image.id}`}
                     className="group relative aspect-square overflow-hidden rounded-lg bg-stone-300"
                   >
                     <Image
                       src={image.url}
                       alt={image.title || "Wildlife photograph"}
                       fill
+                      unoptimized
                       className="object-cover transition duration-300 group-hover:scale-105"
                       sizes="(max-width: 768px) 100vw, 33vw"
                     />
@@ -125,7 +126,7 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
               href="/gallery"
               className="inline-block rounded border-2 border-stone-900 px-8 py-4 text-sm font-semibold uppercase tracking-wider text-stone-900 transition hover:bg-stone-900 hover:text-stone-100"
             >
-              See All Work
+              See All My Work
             </Link>
           </div>
         </div>

@@ -1,13 +1,23 @@
-import { put } from '@vercel/blob';
+import { put, list } from '@vercel/blob';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { IncomingForm, File as FormidableFile } from 'formidable';
 import fs from 'fs';
+import crypto from 'crypto';
 
 export const config = {
   api: {
-    bodyParser: false, // Disable Next.js body parsing
+    bodyParser: false,
   },
 };
+
+// Encode metadata into filename
+function encodeFilename(title: string, description: string, hash: string, originalName: string): string {
+  const ext = originalName.split('.').pop();
+  // Base64 encode to handle special characters
+  const encodedTitle = Buffer.from(title || 'Untitled').toString('base64');
+  const encodedDesc = Buffer.from(description || '').toString('base64');
+  return `${hash}__${encodedTitle}__${encodedDesc}.${ext}`;
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -18,7 +28,6 @@ export default async function handler(
   }
 
   try {
-    // Parse multipart form data
     const form = new IncomingForm();
     
     const { fields, files } = await new Promise<{ fields: any, files: any }>((resolve, reject) => {
@@ -29,34 +38,39 @@ export default async function handler(
     });
 
     const file = Array.isArray(files.file) ? files.file[0] : files.file;
-    const title = Array.isArray(fields.title) ? fields.title[0] : fields.title;
-    const description = Array.isArray(fields.description) ? fields.description[0] : fields.description;
+    const title = Array.isArray(fields.title) ? fields.title[0] : fields.title || '';
+    const description = Array.isArray(fields.description) ? fields.description[0] : fields.description || '';
 
     if (!file) {
       return res.status(400).json({ error: 'No file provided' });
     }
 
-    // Read file from temporary path
     const fileBuffer = fs.readFileSync((file as FormidableFile).filepath);
-    const fileName = (file as FormidableFile).originalFilename || 'image';
+    const fileHash = crypto.createHash('md5').update(fileBuffer).digest('hex');
+    const originalName = (file as FormidableFile).originalFilename || 'image.jpg';
 
-    // Upload to Vercel Blob with metadata
-    const blob = await put(fileName, fileBuffer, {
+    // Check for duplicates
+    const { blobs } = await list();
+    const duplicate = blobs.find(b => b.pathname.startsWith(fileHash));
+    
+    if (duplicate) {
+      return res.status(400).json({ error: 'This image has already been uploaded' });
+    }
+
+    // Encode metadata in filename
+    const encodedFilename = encodeFilename(title, description, fileHash, originalName);
+
+    console.log('Uploading:', encodedFilename);
+
+    const blob = await put(encodedFilename, fileBuffer, {
       access: 'public',
-      addRandomSuffix: true,
     });
 
-    // TODO: Store metadata in a database or JSON file
-    // For now, you'll need to manually add title/description to your images array
-    // Consider using Vercel KV or a similar solution to persist metadata
+    console.log('Upload success:', blob.pathname);
 
-    return res.status(200).json({ 
-      ...blob,
-      title,
-      description 
-    });
+    return res.status(200).json(blob);
   } catch (error) {
     console.error('Upload error:', error);
-    return res.status(500).json({ error: 'Upload failed' });
+    return res.status(500).json({ error: 'Upload failed', details: error.message });
   }
 }

@@ -25,7 +25,7 @@ const Gallery: NextPage = ({ images }: { images: ImageProps[] }) => {
             {images.map((image) => (
               <div
                 key={image.id}
-                id={`image-${image.id}`} // Add ID for anchor links
+                id={`image-${image.id}`}
                 className="group mb-6 cursor-pointer break-inside-avoid"
                 onClick={() => setSelectedImage(image)}
               >
@@ -35,12 +35,12 @@ const Gallery: NextPage = ({ images }: { images: ImageProps[] }) => {
                     alt={image.title || "Wildlife photograph"}
                     width={600}
                     height={400}
+                    unoptimized
                     className="w-full transition duration-500 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                 </div>
 
-                {/* Title overlay on hover */}
                 <div className="mt-3 px-2">
                   <h3 className="text-lg font-bold text-stone-900">
                     {image.title || "Untitled"}
@@ -56,7 +56,7 @@ const Gallery: NextPage = ({ images }: { images: ImageProps[] }) => {
         </div>
       </main>
 
-      {/* Modal - keep the same */}
+      {/* Modal */}
       {selectedImage && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4"
@@ -64,7 +64,7 @@ const Gallery: NextPage = ({ images }: { images: ImageProps[] }) => {
         >
           <button
             onClick={() => setSelectedImage(null)}
-            className="absolute right-6 top-6 text-white transition hover:text-stone-300"
+            className="absolute right-6 top-6 z-10 text-white transition hover:text-stone-300"
           >
             <svg
               className="h-8 w-8"
@@ -82,24 +82,25 @@ const Gallery: NextPage = ({ images }: { images: ImageProps[] }) => {
           </button>
 
           <div
-            className="w-full max-w-6xl"
+            className="grid w-full max-w-7xl gap-8 md:grid-cols-[2fr,1fr]"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative mb-6 aspect-[4/3]">
+            <div className="relative aspect-[4/3]">
               <Image
                 src={selectedImage.url}
                 alt={selectedImage.title || "Wildlife photograph"}
                 fill
+                unoptimized
                 className="object-contain"
                 sizes="100vw"
               />
             </div>
 
-            <div className="text-white">
-              <h2 className="mb-3 text-3xl font-bold">
+            <div className="flex flex-col justify-center text-white">
+              <h2 className="mb-4 text-4xl font-bold">
                 {selectedImage.title || "Untitled"}
               </h2>
-              <p className="font-serif italic text-stone-300">
+              <p className="font-serif text-lg italic leading-relaxed text-stone-300">
                 {selectedImage.description ||
                   "A moment captured in the wild of Botswana."}
               </p>
