@@ -1,8 +1,13 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
+import type { ImageProps } from "../utils/types";
+import getResults from "../utils/cachedImages";
 
-const Home: NextPage = () => {
+const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
+  const featuredImages = images?.slice(-3).reverse() || [];
+
   return (
     <>
       <Head>
@@ -11,26 +16,34 @@ const Home: NextPage = () => {
       </Head>
 
       {/* Hero Section */}
-      <section className="flex min-h-screen items-center justify-center bg-gradient-to-b from-stone-200 to-stone-100 pt-20">
-        <div className="mx-auto max-w-6xl px-6">
+      <section className="relative flex min-h-screen items-center justify-center overflow-hidden pt-20">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/terry/crocback.jpeg"
+            alt=""
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+        </div>
+        <div className="relative z-10 mx-auto max-w-6xl px-6">
           <div className="flex items-center gap-16">
             <div className="flex-shrink-0">
               <img
                 src="/favicon.svg"
                 alt="Terry Wildlife Photography"
-                className="w-96"
+                className="w-96 drop-shadow-2xl"
               />
             </div>
             <div className="flex flex-col items-start">
-              <h1 className="mb-6 font-serif text-6xl italic text-stone-800 md:text-8xl">
+              <h1 className="mb-6 font-serif text-6xl italic text-white drop-shadow-lg md:text-8xl">
                 Terry Wildlife Photography
               </h1>
-              <p className="mb-12 font-serif text-2xl italic text-stone-600">
+              <p className="mb-12 font-serif text-2xl italic text-stone-200 drop-shadow-md">
                 "its all about nature"
               </p>
               <Link
                 href="/gallery"
-                className="inline-block rounded bg-stone-900 px-8 py-4 text-sm font-semibold uppercase tracking-wider text-stone-100 transition hover:bg-stone-800"
+                className="inline-block rounded bg-white px-8 py-4 text-sm font-semibold uppercase tracking-wider text-stone-900 transition hover:bg-stone-100"
               >
                 View Gallery
               </Link>
@@ -53,17 +66,16 @@ const Home: NextPage = () => {
               </p>
               <p className="mt-6 leading-relaxed text-stone-600">
                 Through the lens, I document the untamed spirit of Africa's
-                wildlife—from the golden savannas to the intimate moments
+                wildlife; from the golden sunsets to the intimate moments
                 between predator and prey. Every photograph tells a story of
                 survival, majesty, and the delicate balance of nature.
               </p>
             </div>
 
             <div className="relative h-96 overflow-hidden rounded-lg bg-stone-300">
-              {/* Placeholder for about image - replace with actual photographer portrait */}
               <div className="absolute inset-0 flex items-center justify-center text-stone-500">
                 <span className="text-sm uppercase tracking-wider">
-                  Photographer Portrait
+                  <img src="/terry/terrance.jpg"></img>
                 </span>
               </div>
             </div>
@@ -71,26 +83,43 @@ const Home: NextPage = () => {
         </div>
       </section>
 
-      {/* Featured Work Teaser */}
+      {/* Featured Work */}
       <section className="bg-stone-100 py-24">
         <div className="mx-auto max-w-6xl px-6">
           <h2 className="mb-12 text-center text-4xl font-bold uppercase text-stone-900">
             Featured Work
           </h2>
           <div className="mb-12 grid gap-6 md:grid-cols-3">
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="aspect-square overflow-hidden rounded-lg bg-stone-300 transition duration-300 hover:scale-105"
-              >
-                <div className="flex h-full items-center justify-center text-stone-500">
-                  <span className="text-sm uppercase tracking-wider">
-                    Featured {i}
-                  </span>
-                </div>
-              </div>
-            ))}
+            {featuredImages.length > 0
+              ? featuredImages.map((image) => (
+                  <Link
+                    key={image.id}
+                    href={`/gallery#image-${image.id}`} // Add anchor link
+                    className="group relative aspect-square overflow-hidden rounded-lg bg-stone-300"
+                  >
+                    <Image
+                      src={image.url}
+                      alt={image.title || "Wildlife photograph"}
+                      fill
+                      className="object-cover transition duration-300 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
+                  </Link>
+                ))
+              : [1, 2, 3].map((i) => (
+                  <div
+                    key={i}
+                    className="aspect-square overflow-hidden rounded-lg bg-stone-300"
+                  >
+                    <div className="flex h-full items-center justify-center text-stone-500">
+                      <span className="text-sm uppercase tracking-wider">
+                        Coming Soon
+                      </span>
+                    </div>
+                  </div>
+                ))}
           </div>
+
           <div className="text-center">
             <Link
               href="/gallery"
@@ -167,3 +196,12 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export async function getStaticProps() {
+  return {
+    props: {
+      images: await getResults(),
+    },
+    revalidate: 10,
+  };
+}

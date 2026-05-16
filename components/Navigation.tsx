@@ -16,7 +16,7 @@ export default function Navigation() {
           <img
             src="/favicon.svg"
             alt="Terry Wildlife Photography"
-            className="h-8 w-auto"
+            className="h-10 w-auto"
           />
           <span className="font-serif text-lg italic text-stone-800">
             Terry Wildlife Photography

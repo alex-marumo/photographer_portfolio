@@ -20,30 +20,32 @@ const Gallery: NextPage = ({ images }: { images: ImageProps[] }) => {
             Gallery
           </h1>
 
-          <div className="space-y-12">
+          {/* Masonry Grid */}
+          <div className="columns-1 gap-6 md:columns-2 lg:columns-3">
             {images.map((image) => (
               <div
                 key={image.id}
-                className="group grid cursor-pointer items-start gap-8 md:grid-cols-2"
+                id={`image-${image.id}`} // Add ID for anchor links
+                className="group mb-6 cursor-pointer break-inside-avoid"
                 onClick={() => setSelectedImage(image)}
               >
-                {/* Image */}
-                <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-stone-200">
+                <div className="relative overflow-hidden rounded-lg bg-stone-200">
                   <Image
                     src={image.url}
                     alt={image.title || "Wildlife photograph"}
-                    fill
-                    className="object-cover transition duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    width={600}
+                    height={400}
+                    className="w-full transition duration-500 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                 </div>
 
-                {/* Title & Description */}
-                <div className="py-4">
-                  <h2 className="mb-4 text-3xl font-bold text-stone-900">
+                {/* Title overlay on hover */}
+                <div className="mt-3 px-2">
+                  <h3 className="text-lg font-bold text-stone-900">
                     {image.title || "Untitled"}
-                  </h2>
-                  <p className="font-serif italic leading-relaxed text-stone-600">
+                  </h3>
+                  <p className="mt-1 line-clamp-2 font-serif text-sm italic text-stone-600">
                     {image.description ||
                       "A moment captured in the wild of Botswana."}
                   </p>
@@ -54,7 +56,7 @@ const Gallery: NextPage = ({ images }: { images: ImageProps[] }) => {
         </div>
       </main>
 
-      {/* Modal */}
+      {/* Modal - keep the same */}
       {selectedImage && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4"
@@ -116,5 +118,6 @@ export async function getStaticProps() {
     props: {
       images: await getResults(),
     },
+    revalidate: 10,
   };
 }
