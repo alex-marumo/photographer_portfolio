@@ -2,6 +2,8 @@ import { put, del, list } from '@vercel/blob';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import crypto from 'crypto';
 
+export const runtime = 'edge';
+
 function encodeFilename(title: string, description: string, hash: string, originalExt: string): string {
   const encodedTitle = Buffer.from(title || 'Untitled').toString('base64');
   const encodedDesc = Buffer.from(description || '').toString('base64');
