@@ -46,7 +46,7 @@ export default async function handler(
     }
 
     const fileBuffer = fs.readFileSync((file as FormidableFile).filepath);
-    const fileHash = crypto.createHash('md5').update(fileBuffer).digest('hex');
+    const fileHash = crypto.createHash('md5').update(fileBuffer as any).digest('hex');
     const originalName = (file as FormidableFile).originalFilename || 'image.jpg';
 
     // Check for duplicates
