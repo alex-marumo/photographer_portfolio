@@ -2,7 +2,6 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "terryswildlife",
   "main": ".open-next/worker.js",
-  "pages_build_output_dir": ".next",
   "compatibility_date": "2026-05-17",
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
