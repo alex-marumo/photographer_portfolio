@@ -1,41 +1,60 @@
-# Next.js & Vercel Blob example app
+# Terry Wildlife Photography Portfolio
 
-This example shows how to create an image gallery site using Next.js, [Vercel Blob](https://vercel.com/storage/blob), and [Tailwind](https://tailwindcss.com).
+A modern, elegant photography portfolio website built with Next.js and Vercel Blob storage. Features a clean gallery layout, protected upload portal, and metadata management personalised for Terry Wildlife Photography.
 
-Images are discovered at build time via the `@vercel/blob` SDK's `list()` API, then probed with [sharp](https://github.com/lovell/sharp) to derive dimensions and pre-generate base64 blur placeholders for `next/image`. The blob `url` is served as-is — `next/image` (Vercel's image optimizer) takes care of responsive avif/webp variants.
+## Features
 
-## Deploy your own
+- 🖼️ **Masonry Gallery** - Pinterest-style photo grid with modal lightbox
+- 📱 **Responsive Design** - Mobile-first, works beautifully on all devices
+- 🔐 **Secret Upload Portal** - URL-gated admin access (no visible login)
+- ✏️ **Image Metadata** - Title and description for each photo
+- 🗑️ **Full Management** - Upload, edit, and delete images
+- 🚀 **Fast & Free** - Vercel Blob storage, no database needed
+- 🎨 **Photographer-First UI** - Warm stone tones, serif typography
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+## Tech Stack
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-vercel-blob&project-name=nextjs-image-gallery&repository-name=with-vercel-blob&env=BLOB_READ_WRITE_TOKEN&envDescription=Read%2Fwrite%20token%20for%20your%20Vercel%20Blob%20store)
+- **Framework**: Next.js 16 (Pages Router)
+- **Storage**: Vercel Blob
+- **Styling**: Tailwind CSS
+- **Deployment**: Vercel
+- **Language**: TypeScript
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-## How to use
+### Public Gallery
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
+Visit `https://terryswildlife.vercel.app/` to view all published photos with titles and descriptions. Click any image to open full-screen modal.
 
-```bash
-npx create-next-app --example with-vercel-blob with-vercel-blob-app
-```
+### Upload Portal
 
-```bash
-yarn create next-app --example with-vercel-blob with-vercel-blob-app
-```
+**Features:**
+- Upload multiple images at once
+- Add title and description per image
+- Duplicate detection (prevents re-uploading same file)
+- Manage existing images (edit/delete)
 
-```bash
-pnpm create next-app --example with-vercel-blob with-vercel-blob-app
-```
+**Important:** 
+- Bookmark the upload URL with your secret key
+- Never share this URL publicly
+- No visible login or upload button on public site
 
-## Setup
+### How Metadata Works
 
-1. [Create a Vercel Blob store](https://vercel.com/docs/storage/vercel-blob) and upload your images to its root.
-2. Copy `.env.local.example` to `.env.local` and set `BLOB_READ_WRITE_TOKEN` to the store's read/write token. (When deploying via the button above, set it as an environment variable on the project.)
-3. `npm install && npm run dev`.
+Image metadata (title/description) is encoded directly into the Blob filename using Base64:
+hash__base64Title__base64Description.jpg
 
-## References
+This approach is:
+- ✅ Completely free (no database needed)
+- ✅ Metadata always travels with the image
+- ✅ Works with Vercel Blob's limitations
+- ✅ No external dependencies
 
-- Vercel Blob: https://vercel.com/docs/storage/vercel-blob
-- `@vercel/blob` SDK: https://vercel.com/docs/storage/vercel-blob/using-blob-sdk
-- `next/image`: https://nextjs.org/docs/api-reference/next/image
+## Credits
+
+- **Photography**: Terry Machana
+- **Development**: Alex Marumo
+- **Framework**: Next.js by Vercel
+
+## License
+
+MIT License - built by Alex Marumo for Terry Wildlife Photography
