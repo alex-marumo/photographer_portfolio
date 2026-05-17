@@ -4,8 +4,6 @@ import { IncomingForm, File as FormidableFile } from 'formidable';
 import fs from 'fs';
 import crypto from 'crypto';
 
-export const runtime = 'edge';
-
 export const config = {
   api: {
     bodyParser: false,

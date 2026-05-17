@@ -5,8 +5,6 @@ import Carousel from "../../components/Carousel";
 import getResults from "../../utils/cachedImages";
 import type { ImageProps } from "../../utils/types";
 
-export const runtime = "edge";
-
 const Home: NextPage = ({ currentPhoto }: { currentPhoto: ImageProps }) => {
   const router = useRouter();
   const { photoId } = router.query;

@@ -1,8 +1,6 @@
 import { list } from '@vercel/blob';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-export const runtime = 'edge';
-
 function decodeFilename(pathname: string) {
   try {
     const parts = pathname.split('__');
