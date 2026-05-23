@@ -8,6 +8,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Navigation />
       <Component {...pageProps} />
+      <Analytics />
     </>
   );
 }
