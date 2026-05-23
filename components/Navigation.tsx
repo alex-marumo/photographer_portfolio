@@ -10,15 +10,15 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="fixed left-0 right-0 top-0 z-50 border-b border-stone-200 bg-stone-100/95 backdrop-blur-sm">
+    <nav className="fixed left-0 right-0 top-0 z-50 border-b border-stone-800 bg-stone-900/95 backdrop-blur-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-3">
           <img
             src="/favicon.svg"
             alt="Terry Wildlife Photography"
-            className="h-10 w-auto"
+            className="h-8 w-auto"
           />
-          <span className="font-serif text-lg italic text-stone-800">
+          <span className="font-serif text-lg italic text-stone-100">
             Terry Wildlife Photography
           </span>
         </Link>
@@ -30,8 +30,8 @@ export default function Navigation() {
               href={link.href}
               className={`text-sm uppercase tracking-wider transition ${
                 router.pathname === link.href
-                  ? "font-semibold text-stone-900"
-                  : "text-stone-600 hover:text-stone-900"
+                  ? "font-semibold text-white"
+                  : "text-stone-400 hover:text-stone-100"
               }`}
             >
               {link.label}
