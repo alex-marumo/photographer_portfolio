@@ -60,15 +60,16 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
               <h2 className="mb-6 text-5xl font-bold uppercase text-stone-900">
                 About
               </h2>
-              <p className="font-serif text-xl italic leading-relaxed text-stone-700">
-                Young wildlife photographer capturing the raw beauty and truth
-                of the wild of Botswana
-              </p>
               <p className="mt-6 leading-relaxed text-stone-600">
-                Through the lens, I document the untamed spirit of Africa's
-                wildlife; from the golden sunsets to the intimate moments
-                between predator and prey. Every photograph tells a story of
-                survival, majesty, and the delicate balance of nature.
+                I am a young wildlife photographer based in Kasane, Botswana
+                with a deep passion for capturing raw moments from Chobe
+                National Park. My work focuses on predators, elephant behavior
+                and authentic safari momemts in the wild. Through phtography, I
+                aim to tell powerful stories of Africa's Wildlife and
+                wilderness.
+              </p>
+              <p className="text-stone-702 font-serif text-xl italic leading-relaxed">
+                Experience: Trained with Kalahari Tours
               </p>
             </div>
 
