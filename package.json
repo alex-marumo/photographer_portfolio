@@ -12,6 +12,7 @@
     "@cloudflare/workers-types": "^4.20260517.1",
     "@headlessui/react": "^1.7.4",
     "@heroicons/react": "^2.0.13",
+    "@vercel/analytics": "^2.0.1",
     "@vercel/blob": "^1.0.0",
     "eslint-config-next": "^13.0.1",
     "formidable": "^3.5.4",
@@ -42,4 +43,3 @@
     "vite": "^7"
   }
 }
-
