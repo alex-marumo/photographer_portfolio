@@ -68,9 +68,11 @@ const Home: NextPage = ({ images }: { images: ImageProps[] }) => {
                 aim to tell powerful stories of Africa's Wildlife and
                 wilderness.
               </p>
+              //
               <p className="text-stone-702 font-serif text-xl italic leading-relaxed">
                 Experience: Trained with Kalahari Tours
               </p>
+              //
             </div>
 
             <div className="relative h-96 overflow-hidden rounded-lg bg-stone-300">
